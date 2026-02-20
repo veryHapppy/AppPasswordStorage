@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/kohi_nanum_bold.ttf",
+      "sha1": "caa5df4a59da105fdb548b85b446d97dfda82554"
+    },
+    {
+      "path": "assets/fonts/kohi_nanum_light.ttf",
+      "sha1": "d84ee6ee9b451f209d4e3abdda41b6b387bca854"
+    }
+  ]
+}
