@@ -5,7 +5,8 @@ interface ContainerProps {
 };
 const Container = styled.TouchableOpacity<ContainerProps>`
     background-color: ${({ theme, activated }) => activated ? theme.buttonBackgroundActivated : theme.buttonBackground};
-    align-item: center;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 60px
 `;
@@ -24,13 +25,15 @@ interface ButtonProps {
     text?: string,
     onPress?: () => void,
     activated?: boolean,
-    type?: boolean
+    type?: boolean,
+    disabled?: boolean,
 }
-const Button = ({ text, onPress, activated=true, type=true }: ButtonProps) => {
+const Button = ({ text, onPress, activated=true, type=true, disabled=!activated }: ButtonProps) => {
     return (
         <Container
             onPress={onPress}
             activated={activated}
+            disabled={disabled}
         >
             <Text activated={activated} type={type}>{text}</Text>
         </Container>

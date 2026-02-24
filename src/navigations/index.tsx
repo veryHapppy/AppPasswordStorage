@@ -1,11 +1,18 @@
 import { useContext } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import MainStack from "./MainStack";
 
+const navTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        background: '#ffffff',
+    },
+};
 
 const Navigation = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={navTheme}>
             {<MainStack />}
         </NavigationContainer>
     );

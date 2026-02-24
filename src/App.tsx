@@ -6,6 +6,7 @@ import Navigation from "./navigations";
 const App = () => {
     return (
         <ThemeProvider theme={theme}>
+
             <StatusBar barStyle="dark-content" />
             <Navigation />
         </ThemeProvider>

@@ -1,8 +1,13 @@
+import { Buffer } from '@craftzdog/react-native-buffer';
+
 export type MainStackParamList = {
-  "Main": undefined;
   "Login": undefined;
   "site": undefined;
-  "siteMod": undefined;
   "sideBar": undefined;
+
+  "Signup": undefined;
+  "ConfirmPW": {password: string};
+  "Main": {masterKey: string};
+  "SiteMod": {masterKey: string};
   //Chat: { roomID: string }; 
 };
