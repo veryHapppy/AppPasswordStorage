@@ -20,6 +20,7 @@
     "react-native": "0.84.0",
     "react-native-device-info": "^15.0.2",
     "react-native-encrypted-storage": "^4.0.3",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.30.0",
     "react-native-get-random-values": "^2.0.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
