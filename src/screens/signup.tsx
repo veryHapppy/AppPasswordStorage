@@ -95,7 +95,7 @@ const Signup = () => {
                         />
                     </TermContainer>
                     <TermContainer onPress={_handleTerms}>
-                        <StyledText>이용약관 및 개인정보처리방침 (내용보기)</StyledText>
+                        <StyledText>이용약관 및 개인정보처리방침</StyledText>
                     </TermContainer>
                 </View>
                 <Button 

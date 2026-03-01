@@ -27,6 +27,7 @@ const StyledInput = styled.TextInput.attrs<TextInputProps>(({ theme }) => ({
     include-font-padding: false;
     text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};
     height: ${({height}) => height}px;
+    include-font-padding: false;
 `;
 
 
