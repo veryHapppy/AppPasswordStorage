@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { Alert, Share, Platform, PermissionsAndroid } from "react-native";
+import { Alert, Share, Platform, Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import RNFS from 'react-native-fs';
 //import DocumentPicker from 'react-native-document-picker';
@@ -120,8 +120,20 @@ const SideBar = () => {
         }
     };
 
-    const _handleTerms = () => {
+    const _handleTerms = async () => {
+        const url = "https://marmalade-locket-e42.notion.site/31574db951cd806c9bafd55ab4228fcf";
+        try {
+            const supported = await Linking.canOpenURL(url);
 
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                Alert.alert("해당 주소를 열수 없습니다.", "개발자에게 문의해 주세요");
+            }
+        } catch (e) {
+            console.error("링크 열기 에러: ", e);
+            Alert.alert("해당 주소를 열수 없습니다.", "개발자에게 문의해 주세요");
+        }
     }
 
     return (

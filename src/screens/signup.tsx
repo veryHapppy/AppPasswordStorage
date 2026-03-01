@@ -1,8 +1,9 @@
 import { Button, TextInput, Text } from '../components'
 import { useState, useRef } from 'react';
 import styled from "styled-components/native";
-import { Keyboard, TouchableWithoutFeedback, View, TextInput as RNTextInput } from 'react-native';
+import { Linking, Alert, Keyboard, TouchableWithoutFeedback, View, TextInput as RNTextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Container = styled.View`
     flex-direction: column;
@@ -12,21 +13,44 @@ const Container = styled.View`
     background-color: #ffffff;
 `;
 
-const pwConfirm = (pw: string) => {
-    const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/;
+const TermContainer = styled.TouchableOpacity`
     
-    return pwRegex.test(pw);
-};
+`;
+
+
 
 const Signup = () => {
     const navigation = useNavigation<any>();
     const [password, setPassword] = useState('');
+    const [checked, setChecked] = useState(false);
     const inputRef = useRef<any>(null);
 
     const handleFocusOut = () => {
         Keyboard.dismiss();
         inputRef.current?.blur();
     };
+
+    const pwConfirm = (pw: string) => {
+        const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,16}$/;
+        
+        return (pwRegex.test(pw) && checked);
+    };
+
+    const _handleTerms = async () => {
+        const url = "https://marmalade-locket-e42.notion.site/31574db951cd806c9bafd55ab4228fcf";
+        try {
+            const supported = await Linking.canOpenURL(url);
+
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                Alert.alert("해당 주소를 열수 없습니다.", "개발자에게 문의해 주세요");
+            }
+        } catch (e) {
+            console.error("링크 열기 에러: ", e);
+            Alert.alert("해당 주소를 열수 없습니다.", "개발자에게 문의해 주세요");
+        }
+    }
 
     return (
         <TouchableWithoutFeedback onPress={handleFocusOut} accessible={false} >
@@ -57,6 +81,18 @@ const Signup = () => {
                     <Text warning={true} text="꼭 기억해 주세요. 보안의 핵심입니다."/>
                 </View>
                 <View style={{flex:1}}/>
+                <View style={{ width:"100%", flexDirection:"row", gap:8, padding: 48}}>
+                    <TermContainer onPress={() => setChecked(!checked)}>
+                        <Icon
+                            name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
+                            size={30}
+                            color={checked ? "#2ecc71" : "#bdc3c7"}
+                        />
+                    </TermContainer>
+                    <TermContainer onPress={_handleTerms}>
+                        <Text text="이용약관 및 개인정보처리방침" />
+                    </TermContainer>
+                </View>
                 <Button 
                     text='확인'
                     activated={pwConfirm(password)}

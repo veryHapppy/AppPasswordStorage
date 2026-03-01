@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Text, View, FlatList } from "react-native";
 import styled, { useTheme } from "styled-components/native";
 import { Buffer } from '@craftzdog/react-native-buffer';
-import { Button } from "../components";
+import { AdBanner, Button } from "../components";
 import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
@@ -56,10 +56,10 @@ const formatDate = (timestamp: string) => {
 };
 
 const Main = () => {
+    const navigation = useNavigation<any>();
     const route = useRoute<any>();
     const masterKey = Buffer.from(route.params.masterKey, 'hex');
     const [sort, setSort] = useState(true); //true: 날짜순, false: 이름순
-    const navigation = useNavigation<any>();
     const [vaultList, setVaultList] = useState([]);
     const theme = useTheme();
 
@@ -90,49 +90,52 @@ const Main = () => {
 
     return (
         <Container>
-            <HeaderContainer>
-                <View style={{ width: 120, flexDirection: 'row'}}>
-                    <Button 
-                        text="날짜순" 
-                        activated={sort} 
-                        onPress={() => setSort(true)} 
-                        disabled={false}
-                    />
-                    <Button 
-                        text="이름순" 
-                        activated={!sort} 
-                        onPress={() => setSort(false)}
-                        disabled={false}
-                    />
-                    <AddButton
-                        onPress={() => navigation.navigate('SiteMod', { masterKey: masterKey.toString('hex')})}
-                    >
-                        <ButtonText>+</ButtonText>
-                    </AddButton>
-                </View>
-
-            </HeaderContainer>
-            <SiteListContainer>
-                <FlatList
-                    data={vaultList}
-                    keyExtractor={(item: any) => item.siteId}
-                    renderItem={({ item }) => (
-                        <SiteContainer
-                            onPress={() => navigation.navigate('Site', {masterKey: masterKey.toString('hex'), item})}
+            <View style={{ flex: 1}}>
+                <HeaderContainer>
+                    <View style={{ width: 120, flexDirection: 'row'}}>
+                        <Button 
+                            text="날짜순" 
+                            activated={sort} 
+                            onPress={() => setSort(true)} 
+                            disabled={false}
+                        />
+                        <Button 
+                            text="이름순" 
+                            activated={!sort} 
+                            onPress={() => setSort(false)}
+                            disabled={false}
+                        />
+                        <AddButton
+                            onPress={() => navigation.navigate('SiteMod', { masterKey: masterKey.toString('hex')})}
                         >
-                            <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                <Text style={{fontSize:20, fontFamily: theme.fonts.bold, }}>{item.siteName}</Text>
-                                <Text style={{fontSize:16, fontFamily: theme.fonts.light, }}>{formatDate(item.updatedAt)}</Text>
-                            </View>
-                        </SiteContainer>  
-                    )}
-                    ListEmptyComponent={
-                        <Text style={{ textAlign: 'center', marginTop: 50}}>
-                            저장된 데이터가 없습니다.
-                        </Text>
-                    }
-                />
-            </SiteListContainer>
+                            <ButtonText>+</ButtonText>
+                        </AddButton>
+                    </View>
+
+                </HeaderContainer>
+                <SiteListContainer>
+                    <FlatList
+                        data={vaultList}
+                        keyExtractor={(item: any) => item.siteId}
+                        renderItem={({ item }) => (
+                            <SiteContainer
+                                onPress={() => navigation.navigate('Site', {masterKey: masterKey.toString('hex'), item})}
+                            >
+                                <View style={{flex:1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                                    <Text style={{fontSize:20, fontFamily: theme.fonts.bold, }}>{item.siteName}</Text>
+                                    <Text style={{fontSize:16, fontFamily: theme.fonts.light, }}>{formatDate(item.updatedAt)}</Text>
+                                </View>
+                            </SiteContainer>  
+                        )}
+                        ListEmptyComponent={
+                            <Text style={{ textAlign: 'center', marginTop: 50}}>
+                                저장된 데이터가 없습니다.
+                            </Text>
+                        }
+                    />
+                </SiteListContainer>
+            </View>
+            <AdBanner />
         </Container>
     );
 };

@@ -43,7 +43,11 @@ const TextInput = ({stroke=true, fontSize=16, placeholder, value, onChangeText, 
             returnKeyType={returnKeyType}
             onSubmitEditing={onSubmitEditing}
             blurOnSubmit={blurOnSubmit}
-
+            autoCorrect={false}
+            spellCheck={false}
+            autoCapitalize="none"
+            keyboardType="default"
+            textContentType="none"
         />
     );
 };
