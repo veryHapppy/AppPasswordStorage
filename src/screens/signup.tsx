@@ -17,7 +17,12 @@ const TermContainer = styled.TouchableOpacity`
     
 `;
 
-
+const StyledText = styled.Text`
+    font-size: 16px;
+    color: ${({ theme }) => theme.text};
+    font-family: ${({ theme }) => theme.fonts.bold};
+    paddingVertical: 4px;
+`;
 
 const Signup = () => {
     const navigation = useNavigation<any>();
@@ -81,7 +86,7 @@ const Signup = () => {
                     <Text warning={true} text="꼭 기억해 주세요. 보안의 핵심입니다."/>
                 </View>
                 <View style={{flex:1}}/>
-                <View style={{ width:"100%", flexDirection:"row", gap:8, padding: 48}}>
+                <View style={{ width:"100%", flexDirection:"row", gap:4, paddingStart: 36, alignItems:'center', marginVertical: 48}}>
                     <TermContainer onPress={() => setChecked(!checked)}>
                         <Icon
                             name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
@@ -90,7 +95,7 @@ const Signup = () => {
                         />
                     </TermContainer>
                     <TermContainer onPress={_handleTerms}>
-                        <Text text="이용약관 및 개인정보처리방침" />
+                        <StyledText>이용약관 및 개인정보처리방침 (내용보기)</StyledText>
                     </TermContainer>
                 </View>
                 <Button 

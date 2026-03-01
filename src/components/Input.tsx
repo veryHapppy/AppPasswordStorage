@@ -19,12 +19,13 @@ const StyledInput = styled.TextInput.attrs<TextInputProps>(({ theme }) => ({
     placeholderTextColor: theme.textInputPlaceholder,
 }))<TextInputProps>`
     width: 100%;
-    padding: 16px;
+    padding-horizontal: 16px;
+    padding-vertical: ${({ multiline }) => (multiline ? '16px' : '0px')};
     border-width: 1px;
     border-color: ${({ theme, stroke}) => stroke ? theme.textInputStroke : theme.textInputNonStroke};
     font-size: ${({fontSize}) => fontSize}px;
     include-font-padding: false;
-    text-align-vertical: top;
+    text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};
     height: ${({height}) => height}px;
 `;
 

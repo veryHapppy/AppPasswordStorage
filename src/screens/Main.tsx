@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Text, View, FlatList } from "react-native";
 import styled, { useTheme } from "styled-components/native";
 import { Buffer } from '@craftzdog/react-native-buffer';
-import { AdBanner, Button } from "../components";
+import { AdBanner, Button, TextInput } from "../components";
 import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
@@ -61,6 +61,7 @@ const Main = () => {
     const masterKey = Buffer.from(route.params.masterKey, 'hex');
     const [sort, setSort] = useState(true); //true: 날짜순, false: 이름순
     const [vaultList, setVaultList] = useState([]);
+    const [searchText, setSearchText] = useState("");
     const theme = useTheme();
 
     useFocusEffect(
@@ -86,13 +87,25 @@ const Main = () => {
         } catch(e) {
             console.log("목록 로드 실패: ",e);
         }
-    }
+    };
+
+    const filteredList = vaultList.filter((item: any) => 
+        item.siteName.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     return (
         <Container>
             <View style={{ flex: 1}}>
                 <HeaderContainer>
-                    <View style={{ width: 120, flexDirection: 'row'}}>
+                    <TextInput
+                        placeholder="사이트 검색"
+                        value={searchText}
+                        onChangeText={setSearchText}
+                        height={54}
+                        stroke={true}
+                        multiline={false}
+                    />
+                    <View style={{ width: 120, flexDirection: 'row', marginTop: 16}}>
                         <Button 
                             text="날짜순" 
                             activated={sort} 
@@ -115,7 +128,7 @@ const Main = () => {
                 </HeaderContainer>
                 <SiteListContainer>
                     <FlatList
-                        data={vaultList}
+                        data={filteredList}
                         keyExtractor={(item: any) => item.siteId}
                         renderItem={({ item }) => (
                             <SiteContainer
@@ -129,7 +142,7 @@ const Main = () => {
                         )}
                         ListEmptyComponent={
                             <Text style={{ textAlign: 'center', marginTop: 50}}>
-                                저장된 데이터가 없습니다.
+                                {searchText ? "검색 결과가 없습니다." : "저장된 데이터가 없습니다."}
                             </Text>
                         }
                     />

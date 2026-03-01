@@ -16,7 +16,7 @@ const Container = styled.View`
 
 const InputContainer = styled.View`
     flex: 1;
-    margin-top: 48px;
+    margin-top: 24px;
     padding: 32px;
 `;
 
@@ -33,6 +33,7 @@ const SiteMod = () => {
     const [ accountId, setAccountId ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ memo, setMemo ] = useState('');
+    const [isLoading, setIsLoading] = useState(!!item);
 
     const accountIDRef = useRef<any>(null);
     const passwordRef = useRef<any>(null);
@@ -47,6 +48,8 @@ const SiteMod = () => {
                 setAccountId(data.accountId || '');
                 setPassword(data.password || '');
                 setMemo(data.memo || '');
+
+                setTimeout(() => setIsLoading(false), 100)
             } catch(e) {
                 console.log("데이터 로드 에러: ", e);
                 Toast.show({type:'error', text1:'데이터 로드 오류'})
@@ -111,7 +114,7 @@ const SiteMod = () => {
 
     return (
         <Container>
-            <InputContainer>
+            <InputContainer key={isLoading ? 'loading' : 'ready'}>
                 <TextInput
                     value={siteName}
                     onChangeText={setSiteName}

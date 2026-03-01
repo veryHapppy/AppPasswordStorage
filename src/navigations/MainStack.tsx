@@ -50,7 +50,14 @@ const MainStack = () => {
             <Stack.Screen name="ConfirmPW" component={ConfirmPW} />
             
             <Stack.Screen name="Login" component={Login} options={{
-                gestureEnabled: false
+                gestureEnabled: false,
+                headerRight: () => (
+                <MaterialCommunityIcons
+                    name="menu"
+                    size={24}
+                    onPress={() => navigation.navigate('SideBar')}
+                />
+            ),
             }} />
 
             <Stack.Screen name="Main" component={Main} options={{

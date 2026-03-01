@@ -12,7 +12,8 @@ const App = () => {
     useEffect(() => {
         const checkData = async () => {
             try {
-                await MobileAds().initialize();
+                const adapterStatuses = await MobileAds().initialize();
+                console.log('광고 초기화 완료:', adapterStatuses);
 
                 const hasLaunchedBefore = await AsyncStorage.getItem('hasLaunchedBefore');
 
@@ -20,6 +21,7 @@ const App = () => {
                     await EncryptedStorage.clear();
 
                     await AsyncStorage.setItem('hasLaunchedBefore', 'true');
+                    console.log('신규 설치: 데이터 초기화 완료');
                 }
             } catch (e) {
                 console.error('초기화 실패', e);
