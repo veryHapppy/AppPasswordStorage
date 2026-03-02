@@ -52,6 +52,12 @@ react {
 
     /* Autolinking */
     autolinkLibrariesWithApp()
+    def hermesPath = file("${rootProject.projectDir}/../node_modules/hermes-compiler/hermesc/win64-bin/hermesc.exe")
+    
+    if (hermesPath.exists()) {
+        // 경로에 공백이 있을 경우를 대비해 따옴표로 감싸서 전달합니다.
+        hermesCommand = "\"${hermesPath.absolutePath}\""
+    }
 }
 
 /**
@@ -84,6 +90,9 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "arm64-v8a", "x86_64"
+        }
     }
     signingConfigs {
         debug {

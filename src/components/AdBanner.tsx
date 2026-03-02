@@ -1,7 +1,7 @@
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import styled from 'styled-components/native';
 
-const adUnitId = TestIds.BANNER;
+const adUnitId = "ca-app-pub-7997322587831368/6963179659";
 
 const AdContainer = styled.View`
   width: 100%;
